@@ -1,0 +1,428 @@
+/* Reading pages preserve the complete lesson while avoiding wheel navigation. */
+#toast {
+    transform: translateX(-50%);
+    bottom: 16px;
+}
+#toast.visible {
+    transform: translateX(-50%);
+}
+.explanation-reading {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    padding: 0;
+    min-height: 0;
+    flex: 1;
+}
+.explanation-reading > h2 {
+    flex-shrink: 0;
+    margin-bottom: 12px;
+}
+.reading-pages {
+    position: relative;
+    height: 380px;
+    flex: 1;
+    min-height: 0;
+}
+.reading-page {
+    position: absolute;
+    inset: 0;
+    display: flow-root;
+}
+.reading-page[hidden] {
+    display: none;
+}
+.reading-fragment {
+    display: flow-root;
+    margin: 0 0 14px;
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--muted);
+}
+.reading-fragment h3 {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+.reading-fragment p {
+    font-size: 13px;
+    line-height: 1.85;
+}
+.reading-fragment .beginner-foundation {
+    margin: 0;
+    padding: 12px;
+}
+.reading-fragment .beginner-example {
+    margin: 0;
+    padding: 12px;
+}
+.reading-fragment .beginner-vocabulary {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.reading-fragment .insight-box {
+    margin: 0;
+    padding: 12px;
+}
+.reading-action {
+    display: flex;
+    gap: 10px;
+}
+.reading-action > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 23px;
+    height: 23px;
+    margin-top: 3px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: var(--peach);
+    font: 11px var(--mono);
+}
+.reading-navigation {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+    padding-top: 10px;
+    margin-top: 8px;
+    border-top: 1px solid var(--line-soft);
+}
+.reading-navigation button {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 24px;
+}
+.reading-navigation label {
+    flex: 1;
+    min-width: 0;
+}
+.reading-select {
+    display: block;
+    width: 100%;
+    height: 44px;
+    padding: 0 8px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    text-overflow: ellipsis;
+}
+.reading-fragment pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.reading-fragment .small-button {
+    min-height: 44px;
+    white-space: normal;
+}
+@media (min-width: 1100px) and (min-height: 700px) {
+    body[data-view="learn"] .topbar {
+        height: 64px;
+        gap: 16px;
+        padding: 0 20px;
+    }
+    body[data-view="learn"] .app-shell {
+        height: calc(100dvh - 64px);
+        min-height: 0;
+        grid-template-columns: 235px minmax(0, 1fr);
+    }
+    body[data-view="learn"] .sidebar {
+        height: 100%;
+        min-height: 0;
+        padding: 16px 14px;
+        gap: 12px;
+    }
+    body[data-view="learn"] .course-intro {
+        line-height: 1.7;
+        margin: 0;
+        font-size: 11px;
+    }
+    body[data-view="learn"] #course-nav {
+        gap: 3px;
+    }
+    body[data-view="learn"] .course-group summary {
+        font-size: 11px;
+    }
+    body[data-view="learn"] .lesson-link {
+        font-size: 11px;
+        padding: 8px;
+        min-height: 44px;
+    }
+    body[data-view="learn"] .sidebar-bottom {
+        padding-top: 10px;
+    }
+    body[data-view="learn"] #main {
+        height: 100%;
+        padding: 12px;
+        min-height: 0;
+    }
+    .learning-layout {
+        height: 100%;
+        min-height: 0;
+        align-items: stretch;
+        gap: 12px;
+        grid-template-columns: minmax(0, 1fr) 370px;
+    }
+    .lesson-workspace {
+        height: 100%;
+        min-height: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto auto;
+        padding: 16px 12px 8px;
+    }
+    .lesson-header {
+        padding: 0 4px 12px;
+    }
+    .breadcrumb {
+        margin-bottom: 6px;
+        font-size: 10px;
+    }
+    .title-row {
+        gap: 8px;
+    }
+    .lesson-header h1 {
+        font-size: clamp(22px, 1.8vw, 32px);
+        letter-spacing: -0.8px;
+    }
+    .lesson-subtitle {
+        font-size: 11px;
+        margin-top: 5px;
+        line-height: 1.7;
+    }
+    .lesson-badges {
+        display: none;
+    }
+    .diagram-card:not(.architecture-stage) {
+        min-height: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+    .diagram-toolbar {
+        padding: 8px;
+        gap: 8px;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+    .stat-row {
+        gap: 6px;
+    }
+    .stat {
+        min-width: 0;
+        padding: 6px 9px;
+        border: 0;
+        border-left: 1px solid var(--line-soft);
+        border-radius: 0;
+    }
+    .stat span {
+        font-size: 8px;
+        margin-bottom: 4px;
+    }
+    .stat strong {
+        font-size: 10px;
+    }
+    .small-button {
+        min-height: 38px;
+    }
+    .learning-scene {
+        height: 100%;
+        min-height: 0;
+        display: grid;
+        grid-template-rows: 30px minmax(0, 1fr) 54px;
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .scene-heading-bar {
+        grid-row: 1;
+        grid-column: 1;
+        padding: 0 12px;
+    }
+    .scene-model-label {
+        font-size: 9px;
+        padding: 2px 6px;
+    }
+    .scene-viewport {
+        grid-row: 2;
+        grid-column: 1;
+        min-height: 0;
+        overflow: visible;
+    }
+    .scene-artboard {
+        height: 100%;
+        min-height: 0;
+    }
+    .mechanism-svg {
+        height: 100%;
+        width: 100%;
+        aspect-ratio: auto;
+        overflow: visible;
+    }
+    .scene-story {
+        grid-row: 3;
+        grid-column: 1;
+        padding: 6px 130px 6px 10px;
+        min-height: 0;
+        font-size: 11px;
+    }
+    .scene-story p {
+        font-size: 11px;
+        line-height: 1.6;
+    }
+    .scene-phase-number {
+        display: none;
+    }
+    .scene-phase-rail {
+        grid-row: 3;
+        grid-column: 1;
+        justify-self: end;
+        align-self: center;
+        display: flex;
+        gap: 4px;
+        padding: 0 8px;
+        max-width: 128px;
+    }
+    .scene-phase-rail button {
+        min-height: 44px;
+        width: 34px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+    }
+    .scene-phase-rail button > span:last-child {
+        display: none;
+    }
+    .scene-phase-rail button > span:first-child {
+        padding: 0;
+        font-size: 10px;
+    }
+    .scene-phase-rail button.active {
+        background: var(--accent-bg);
+        border-color: var(--accent-line);
+    }
+    .timeline-panel {
+        padding: 10px 10px 6px;
+        margin-top: 10px;
+    }
+    .step-list {
+        margin-top: 8px;
+        gap: 3px;
+    }
+    .step-button {
+        gap: 5px;
+        min-height: 55px;
+        font-size: 9px;
+    }
+    .step-button > span:first-child {
+        width: 28px;
+        height: 28px;
+        font-size: 10px;
+    }
+    .step-list:before {
+        top: 14px;
+    }
+    .source-strip {
+        margin: 3px 4px 0;
+        font-size: 9px;
+    }
+    .source-strip button {
+        min-height: 28px;
+    }
+    .explanation-column {
+        position: static;
+        height: 100%;
+        min-height: 0;
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) auto;
+        gap: 10px;
+    }
+    .explanation-panel {
+        height: 100%;
+        min-height: 0;
+        max-height: none;
+        padding: 14px;
+    }
+    .step-meta {
+        margin-bottom: 10px;
+        font-size: 10px;
+    }
+    .explanation-panel h2 {
+        font-size: 19px;
+        line-height: 1.4;
+        margin-bottom: 12px;
+    }
+    .reading-pages {
+        height: auto;
+    }
+    .explanation-panel .step-navigation {
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+    .shortcuts {
+        margin-top: 7px;
+        font-size: 8px;
+    }
+    .objectives-panel {
+        padding: 12px 14px;
+    }
+    .objectives-panel h3 {
+        font-size: 10px;
+        margin-bottom: 8px;
+    }
+    .objectives-panel ul {
+        gap: 6px;
+    }
+    .objectives-panel li {
+        font-size: 10px;
+        line-height: 1.6;
+    }
+    .objectives-panel .objective-note {
+        display: none;
+    }
+    .beginner-vocabulary dd {
+        font-size: 12px;
+        line-height: 1.8;
+    }
+}
+@media (min-width: 1600px) and (min-height: 700px) {
+    body[data-view="learn"] .app-shell {
+        grid-template-columns: 255px minmax(0, 1fr);
+    }
+    .learning-layout {
+        grid-template-columns: minmax(0, 1fr) 410px;
+    }
+    .explanation-panel {
+        padding: 18px;
+    }
+    .reading-fragment,
+    .reading-fragment p {
+        font-size: 14px;
+        line-height: 1.9;
+    }
+    .beginner-vocabulary dd {
+        font-size: 13px;
+        line-height: 1.9;
+    }
+}
+@media (max-width: 1099px), (max-height: 699px) {
+    .explanation-panel {
+        max-height: none;
+    }
+    .explanation-reading {
+        flex: auto;
+        min-height: 500px;
+    }
+    .reading-pages {
+        height: 380px;
+        flex: none;
+    }
+}

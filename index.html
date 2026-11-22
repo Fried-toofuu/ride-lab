@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#25231e" />
+        <meta
+            name="description"
+            content="Học sâu repository Ride-Hailing qua sơ đồ tương tác: hành trình đặt xe, authority, matching, Outbox, Saga và phục hồi lỗi."
+        />
+        <title>RideLab — Hiểu hệ thống, từng bước một</title>
+        <link
+            rel="icon"
+            href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%232d3b1b'/%3E%3Cpath d='M10 28V12h10q10 0 10 7t-10 7h-3' fill='none' stroke='%23bfd49c' stroke-width='4'/%3E%3C/svg%3E"
+        />
+        <link rel="stylesheet" href="./styles.css" />
+        <link rel="stylesheet" href="./scenes.css" />
+        <link rel="stylesheet" href="./beginner.css" />
+        <link rel="stylesheet" href="./viewport.css" />
+        <script type="module" src="./app.mjs"></script>
+    </head>
+    <body>
+        <a class="skip-link" href="#main">Đến nội dung bài học</a>
+        <header class="topbar">
+            <a
+                class="brand"
+                href="#/learn/ride-journey/1"
+                aria-label="RideLab — trang đầu"
+                ><span class="brand-mark" aria-hidden="true"
+                    ><i></i><i></i><i></i></span
+                ><strong>Ride<span>Lab</span></strong
+                ><span class="brand-divider"></span
+                ><span class="brand-caption">REPOSITORY EXPLORER</span></a
+            >
+            <nav class="topnav" aria-label="Chế độ học">
+                <button data-view="learn" class="nav-button active">
+                    <span data-icon="book"></span>Học
+                </button>
+                <button data-view="practice" class="nav-button">
+                    <span data-icon="spark"></span>Luyện tập
+                </button>
+                <button data-view="architecture" class="nav-button">
+                    <span data-icon="layers"></span>Bản đồ hệ thống
+                </button>
+                <button data-view="summary" class="nav-button">
+                    <span data-icon="grid"></span>Tóm tắt
+                </button>
+            </nav>
+            <div class="top-actions">
+                <button
+                    id="search-open"
+                    class="search-trigger"
+                    aria-label="Tìm bài học và khái niệm"
+                >
+                    <span data-icon="search"></span
+                    ><span>Tìm bài học, khái niệm…</span
+                    ><kbd>Ctrl K</kbd></button
+                ><button
+                    id="theme-toggle"
+                    class="icon-button"
+                    aria-label="Chuyển sang giao diện sáng"
+                >
+                    <span data-icon="moon"></span></button
+                ><span class="repo-badge"
+                    >DS03<span class="badge-dot"></span
+                ></span>
+            </div>
+        </header>
+        <div class="app-shell">
+            <aside class="sidebar" aria-label="Khóa học">
+                <div class="sidebar-heading">
+                    <span><span data-icon="folder"></span>Khám phá repo</span
+                    ><small id="lesson-count"></small>
+                </div>
+                <div class="course-intro">
+                    Đọc code bằng cách<br /><strong
+                        >nhìn hệ thống chuyển động.</strong
+                    >
+                </div>
+                <nav id="course-nav" aria-label="Danh sách bài học"></nav>
+                <div class="sidebar-bottom">
+                    <div class="progress-label">
+                        <span>TIẾN ĐỘ CỦA BẠN</span
+                        ><strong id="progress-count">0 / 14</strong>
+                    </div>
+                    <div class="progress-track">
+                        <div id="progress-fill"></div>
+                    </div>
+                    <p>
+                        Lưu trên trình duyệt này <span data-icon="check"></span>
+                    </p>
+                    <button id="reset-progress" class="text-button">
+                        Đặt lại tiến độ
+                    </button>
+                </div>
+            </aside>
+            <main id="main" tabindex="-1"></main>
+        </div>
+        <dialog id="search-dialog" aria-labelledby="search-title">
+            <div class="dialog-header">
+                <h2 id="search-title">Bạn muốn hiểu điều gì?</h2>
+                <button
+                    class="icon-button close-dialog"
+                    aria-label="Đóng tìm kiếm"
+                >
+                    <span data-icon="close"></span>
+                </button>
+            </div>
+            <label class="search-input-wrap"
+                ><span data-icon="search"></span
+                ><input
+                    id="search-input"
+                    type="search"
+                    placeholder="Thử: timeout, giữ tài xế, Outbox…"
+                    autocomplete="off"
+                    aria-label="Tìm bài học"
+            /></label>
+            <div id="search-results"></div>
+            <p class="dialog-foot">
+                Tìm trong tiêu đề, giải thích và khái niệm · Esc để đóng
+            </p>
+        </dialog>
+        <dialog id="source-dialog" aria-labelledby="source-title">
+            <div class="dialog-header">
+                <div>
+                    <span class="eyebrow">ĐỐI CHIẾU REPOSITORY</span>
+                    <h2 id="source-title">Mã nguồn</h2>
+                </div>
+                <button
+                    class="icon-button close-dialog"
+                    aria-label="Đóng mã nguồn"
+                >
+                    <span data-icon="close"></span>
+                </button>
+            </div>
+            <div id="source-content"></div>
+        </dialog>
+        <div id="toast" role="status" aria-live="polite"></div>
+        <div
+            id="announcer"
+            class="sr-only"
+            aria-live="polite"
+            aria-atomic="true"
+        ></div>
+        <noscript
+            ><p class="noscript">
+                Bật JavaScript để khám phá sơ đồ và bài học tương tác. Bạn cũng
+                có thể đọc <a href="../README.md">tài liệu repository</a>.
+            </p></noscript
+        >
+    </body>
+</html>
